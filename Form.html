@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Keren</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #00ffd55b, #0057b37c);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+    .form-container {
+    background-color: rgba(227, 233, 227, 0.959);
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(8, 12, 20, 0.473);
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+
+  .form-container:hover {
+    transform: translateY(-20px);
+    box-shadow: 0px 5px 20px rgba(2, 45, 126, 0.637);
+  }
+
+  .form-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  textarea,
+  select {
+    width: 96.5%;
+    padding: 10px;
+    border: 1px solid rgba(36, 85, 107, 0.418);
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: rgb(238, 247, 238); /* Warna latar belakang input */
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  }
+
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="email"]:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #0084ff; /* Warna border saat input mendapatkan fokus */
+    background-color: #ebf5eb; /* Warna latar belakang input saat mendapatkan fokus */
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .error-input {
+    border-color: red;
+  }
+
+  input.error-input {
+  background-color: #ffc0cb; /* Warna latar belakang merah muda */
+  }
+
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .next-button {
+    background: linear-gradient(to left, #0247a1fb, #0057b3fb);
+    color: #fff;
+    border: none;
+    box-shadow: 0px 0px 15px rgba(1, 170, 248, 0.596);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .next-button:hover {
+    background-color: #021877;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
+<script>
+  function validatePhoneNumber(input) {
+    const phoneNumber = input.value.trim();
+    const phoneNumberPattern = /^08[0-9]{8,11}$/;
+    const errorMessage = document.getElementById("phone-error");
+
+    if (!phoneNumberPattern.test(phoneNumber)) {
+      input.classList.add("error-input");
+      errorMessage.textContent = "Nomor telepon tidak valid. Harus diawali dengan 08 dan terdiri dari 10 hingga 13 digit.";
+    } else {
+      input.classList.remove("error-input");
+      errorMessage.textContent = "";
+    }
+  }
+
+  function validateEmail(input) {
+    const email = input.value.trim();
+    const emailPattern = /^[A-Za-z0-9._%+-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,4}$/;
+    const emailErrorMessage = document.getElementById("email-error");
+
+    if (!emailPattern.test(email)) {
+      input.classList.add("error-input");
+      emailErrorMessage.textContent = "Email tidak valid. Harus mengandung domain yang valid (contoh: @namadomain.com).";
+    } else {
+      input.classList.remove("error-input");
+      emailErrorMessage.textContent = "";
+    }
+  }
+
+  function validateForm() {
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const phone = phoneInput.value.trim();
+
+    if (name === '') {
+      nameInput.classList.add('error-input');
+    } else {
+      nameInput.classList.remove('error-input');
+    }
+
+    if (email === '') {
+      emailInput.classList.add('error-input');
+    } else {
+      emailInput.classList.remove('error-input');
+    }
+
+    if (phone === '' || !phone.match(/^08[0-9]{8,11}$/)) {
+      phoneInput.classList.add('error-input');
+    } else {
+      phoneInput.classList.remove('error-input');
+    }
+
+    if (name === '' || email === '' || phone === '' || !phone.match(/^08[0-9]{8,11}$/)) {
+      alert('Pastikan semua field telah diisi dengan benar.');
+    } else {
+      openSelectedOption();
+    }
+  }
+</script>
+</head>
+<body>
+  <div class="form-container">
+    <h2 class="form-title">Form Keren</h2>
+    <form>
+      <div class="form-group">
+        <label for="name">Nama</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required oninput="validateEmail(this)">
+        <p class="error-message" id="email-error"></p>
+      </div>
+      <div class="form-group">
+        <label for="phone">Nomor Telepon</label>
+        <input type="tel" id="phone" name="phone" pattern="08[0-9]{8,11}" required oninput="validatePhoneNumber(this)">
+        <p class="error-message" id="phone-error"></p>
+      </div>
+      <div class="form-group">
+        <label>Pilihan Ganda</label>
+        <div>
+          <label><input type="radio" name="choice" value="option1"> Opsi 1</label>
+        </div>
+        <div>
+          <label><input type="radio" name="choice" value="option2"> Opsi 2</label>
+        </div>
+        <div>
+          <label><input type="radio" name="choice" value="option3"> Opsi 3</label>
+        </div>
+      </div>
+      <button class="next-button" type="button" onclick="validateForm()">Next</button>
+    </form>
+  </div>
+
+  <div id="pageOption1" class="page hidden">
+    <h2>Halaman Pilihan Ganda 1</h2>
+    <form>
+      <!-- Field-field halaman 1 Anda di sini -->
+      <button class="next-button" type="submit">Kirim</button>
+    </form>
+  </div>
+
+  <div id="pageOption2" class="page hidden">
+    <h2>Halaman Pilihan Ganda 2</h2>
+    <form>
+      <!-- Field-field halaman 2 Anda di sini -->
+      <button class="next-button" type="submit">Kirim</button>
+    </form>
+  </div>
+
+  <div id="pageOption3" class="page hidden">
+    <h2>Halaman Pilihan Ganda 3</h2>
+    <form>
+      <!-- Field-field halaman 3 Anda di sini -->
+      <button class="next-button" type="submit">Kirim</button>
+    </form>
+  </div>
+
+  <script>
+    function openSelectedOption() {
+      const selectedOption = document.querySelector('input[name="choice"]:checked');
+      if (selectedOption) {
+        const optionValue = selectedOption.value;
+        window.open(`page${optionValue}.html`, '_self');
+      }
+    }
+  </script>
+</body>
+</html>
