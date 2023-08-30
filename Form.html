@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-<title>Form Keren</title>
+<title>Form Contoh</title>
 <style>
   body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to bottom, #00ffd55b, #0057b37c);
+    font-family: 'roboto';
+    background: linear-gradient(to top, #00ffd55b, #0057b37c);
     margin: 0;
     padding: 0;
     display: flex;
@@ -30,6 +30,13 @@
   .form-container:hover {
     transform: translateY(-20px);
     box-shadow: 0px 5px 20px rgba(2, 45, 126, 0.637);
+  }
+
+  .form-container img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(124, 123, 123, 0.918);
   }
 
   .form-title {
@@ -93,10 +100,11 @@
     background: linear-gradient(to left, #0247a1fb, #0057b3fb);
     color: #fff;
     border: none;
-    box-shadow: 0px 0px 15px rgba(1, 170, 248, 0.596);
+    box-shadow: 0px 0px 15px rgba(131, 128, 128, 0.849);
     border-radius: 8px;
     padding: 10px 20px;
     font-size: 18px;
+    font-weight: bold;
     cursor: pointer;
   }
 
@@ -152,7 +160,7 @@
       nameInput.classList.remove('error-input');
     }
 
-    if (email === '') {
+    if (email === ''|| !email.match(/^[A-Za-z0-9._%+-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,4}$/)) {
       emailInput.classList.add('error-input');
     } else {
       emailInput.classList.remove('error-input');
@@ -164,17 +172,18 @@
       phoneInput.classList.remove('error-input');
     }
 
-    if (name === '' || email === '' || phone === '' || !phone.match(/^08[0-9]{8,11}$/)) {
-      alert('Pastikan semua field telah diisi dengan benar.');
-    } else {
-      openSelectedOption();
-    }
+    if (name === '' || email === '' || phone === '' || !email.match(/^[A-Za-z0-9._%+-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,4}$/) || !phone.match(/^08[0-9]{8,11}$/)) {
+  alert('Pastikan semua field telah diisi dengan benar.');
+} else {
+  openSelectedOption();
+}
   }
 </script>
 </head>
 <body>
   <div class="form-container">
-    <h2 class="form-title">Form Keren</h2>
+    <img src="formkeren.png" alt="Gambar Header" style="width: 100%; height: auto;">
+    <h2 class="form-title">Form Contoh</h2>
     <form>
       <div class="form-group">
         <label for="name">Nama</label>
@@ -182,13 +191,17 @@
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" required oninput="validateEmail(this)">
+        <input type="email" id="email" name="email" pattern="[A-Za-z0-9._%+-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,4}$" oninput="validateEmail(this)">
         <p class="error-message" id="email-error"></p>
       </div>
       <div class="form-group">
         <label for="phone">Nomor Telepon</label>
         <input type="tel" id="phone" name="phone" pattern="08[0-9]{8,11}" required oninput="validatePhoneNumber(this)">
         <p class="error-message" id="phone-error"></p>
+      </div>
+      <div class="form-group">
+        <label for="message">Pesan</label>
+        <textarea id="message" name="message" rows="2" cols="50" required></textarea>
       </div>
       <div class="form-group">
         <label>Pilihan Ganda</label>
@@ -206,7 +219,7 @@
     </form>
   </div>
 
-  <div id="pageoption1" class="page hidden">
+  <div id="pageOption1" class="page hidden">
     <h2>Halaman Pilihan Ganda 1</h2>
     <form>
       <!-- Field-field halaman 1 Anda di sini -->
@@ -214,7 +227,7 @@
     </form>
   </div>
 
-  <div id="pageoption2" class="page hidden">
+  <div id="pageOption2" class="page hidden">
     <h2>Halaman Pilihan Ganda 2</h2>
     <form>
       <!-- Field-field halaman 2 Anda di sini -->
@@ -222,7 +235,7 @@
     </form>
   </div>
 
-  <div id="pageoption3" class="page hidden">
+  <div id="pageOption3" class="page hidden">
     <h2>Halaman Pilihan Ganda 3</h2>
     <form>
       <!-- Field-field halaman 3 Anda di sini -->
@@ -235,7 +248,7 @@
       const selectedOption = document.querySelector('input[name="choice"]:checked');
       if (selectedOption) {
         const optionValue = selectedOption.value;
-        window.open(`page${optionValue}.html`, '_blank');
+        window.open(`page${optionValue}.html`, '_self');
       }
     }
   </script>
